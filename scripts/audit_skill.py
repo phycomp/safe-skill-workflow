@@ -76,6 +76,9 @@ def classify(rel: Path) -> str:
 def iter_files(root: Path):
     for p in root.rglob("*"):
         if p.is_file() and not p.is_symlink():
+            # skip VCS metadata
+            if ".git" in p.relative_to(root).parts:
+                continue
             yield p
 
 
